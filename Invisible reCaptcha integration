@@ -1,0 +1,44 @@
+import React, { useEffect } from "react";
+
+const RecaptchaDemo = () => {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://www.google.com/recaptcha/api.js";
+    script.async = true;
+    script.defer = true;
+
+    script.onload = () => {
+      // Once the reCAPTCHA script is loaded, render the reCAPTCHA widget
+      window.grecaptcha.render("recaptcha-container", {
+        sitekey: "6LdSiWgpAAAAAD_dTMLqfuIzjSQfTdgBf8g99LNX",
+        callback: onSubmit,
+        size: "invisible",
+      });
+    };
+
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const onSubmit = (token) => {
+    // Handle the reCAPTCHA token
+    console.log("Token:", token);
+  };
+
+  const handleClick = () => {
+    // Trigger the reCAPTCHA challenge
+    window.grecaptcha.execute();
+  };
+
+  return (
+    <div>
+      <div id="recaptcha-container"></div>
+      <button onClick={handleClick}>Submit</button>
+    </div>
+  );
+};
+
+export default RecaptchaDemo;
