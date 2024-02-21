@@ -8,12 +8,18 @@ const RecaptchaDemo = () => {
     script.defer = true;
 
     script.onload = () => {
+      console.log("reCAPTCHA script loaded successfully");
       // Once the reCAPTCHA script is loaded, render the reCAPTCHA widget
-      window.grecaptcha.render("recaptcha-container", {
-        sitekey: "6LdSiWgpAAAAAD_dTMLqfuIzjSQfTdgBf8g99LNX",
-        callback: onSubmit,
-        size: "invisible",
-      });
+      if (window.grecaptcha && typeof window.grecaptcha.render === "function") {
+        console.log("Rendering reCAPTCHA widget");
+        window.grecaptcha.render("recaptcha-container", {
+          sitekey: "6LdSiWgpAAAAAD_dTMLqfuIzjSQfTdgBf8g99LNX",
+          callback: handleToken,
+          size: "invisible",
+        });
+      } else {
+        console.error("reCAPTCHA client not available");
+      }
     };
 
     document.body.appendChild(script);
@@ -23,7 +29,7 @@ const RecaptchaDemo = () => {
     };
   }, []);
 
-  const onSubmit = (token) => {
+  const handleToken = (token) => {
     // Handle the reCAPTCHA token
     console.log("Token:", token);
   };
