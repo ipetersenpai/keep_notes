@@ -17,7 +17,6 @@ MAIL_PASSWORD=your_email_password
 MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=your_email@example.com
 MAIL_FROM_NAME="${APP_NAME}"
-
 ```
 
 ### Step 2: Update User Model
@@ -57,7 +56,6 @@ Route::middleware(['auth'])->group(function () {
         // Resend verification email...
     })->middleware(['throttle:6,1'])->name('verification.send');
 });
-
 ```
 
 ### Step 4: Update Registration Process
